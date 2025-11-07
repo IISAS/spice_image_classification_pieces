@@ -1,2 +1,3 @@
 # SPICE Pieces repository
-Pieces used and developed for the SPICE project
+## Image classification pieces
+Pieces for preprocessing images and training/inferecing a simple CNN classificator.
