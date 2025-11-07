@@ -1,1 +1,2 @@
-# spice_image_classification_pieces
+# SPICE Pieces repository
+Pieces used and developed for the SPICE project

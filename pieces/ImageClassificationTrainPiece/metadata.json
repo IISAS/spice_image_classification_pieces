@@ -1,0 +1,31 @@
+{
+    "name": "ImageClassificationTrainPiece",
+    "description": "Piece for training an image classification model based on a 2D CNN architecture. The model is implemented in Keras.",
+    "dependency": {
+        "dockerfile": "Dockerfile.tensorflow-gpu",
+        "requirements_file": "requirements_tensorflow-gpu.txt"
+    },
+    "container_resources": {
+        "requests": {
+            "cpu": 100,
+            "memory": 128
+        },
+        "limits": {
+            "cpu": 500,
+            "memory": 512
+        }
+    },
+    "tags": [
+        "AI",
+        "Keras",
+        "Tensorflow",
+        "CNN",
+        "2D",
+        "classification",
+        "images"
+    ],
+    "style": {
+        "node_label": "Image Classification - 2D CNN (Train)",
+        "icon_class_name": "fa-duotone fa-solid fa-right-to-bracket"
+    }
+}
