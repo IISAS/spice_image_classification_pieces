@@ -73,7 +73,7 @@ class ImageClassificationTrainPiece(BasePiece):
             for j in range(num_layers):
                 model.add(Conv2D(
                     filters=no_filters,
-                    kernel_size=tuple(kernel_sizes[i]),
+                    kernel_size=kernel_sizes[i],
                     padding='same',
                     name=f'conv_{i + 1}_{j + 1}'
                 ))

@@ -65,4 +65,4 @@ def test_ImageClassificationTrainPiece():
         piece_kwargs['kernel_sizes']
     ):
         assert layer.filters == filters
-        assert layer.kernel_size == tuple(kernel_size)
+        assert layer.kernel_size == (kernel_size, kernel_size)
