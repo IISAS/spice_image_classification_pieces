@@ -47,7 +47,7 @@ def test_ImageClassificationTrainPiece():
         'validation_split': 0.2,
         'num_layers': 1,
         'filters_per_layer': [64] * 1,
-        'kernel_sizes': [[3,3]] * 1,
+        'kernel_sizes': [3] * 1,
         'batch_size': 32,
         'epochs': 1,
         'early_stopping_patience': 300,
