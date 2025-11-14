@@ -58,12 +58,8 @@ jobs:
       - name: Publish images
         env:
           GHCR_USERNAME: ${{ github.actor }}
-        run: |
-          echo "DOCKER_CLIENT_TIMEOUT=600" >> $GITHUB_ENV
-          echo "COMPOSE_HTTP_TIMEOUT=600" >> $GITHUB_ENV
-          echo "DOCKER_HTTP_TIMEOUT=600" >> $GITHUB_ENV
-          
-          domino piece-repository publish-images --registry-token ${{ secrets.GITHUB_TOKEN }}
+          DOCKER_CLIENT_TIMEOUT: 600
+        run: domino piece-repository publish-images --registry-token ${{ secrets.GITHUB_TOKEN }}
           
 
       - name: Commit files
