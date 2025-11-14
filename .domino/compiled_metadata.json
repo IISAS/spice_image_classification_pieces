@@ -2,7 +2,7 @@
     "ImageClassificationInferencePiece": {
         "name": "ImageClassificationInferencePiece",
         "dependency": {
-            "dockerfile": "Dockerfile.tensorflow-gpu",
+            "dockerfile": "Dockerfile_tensorflow-gpu",
             "requirements_file": "requirements_tensorflow.txt"
         },
         "tags": [
@@ -81,7 +81,7 @@
     "ImageClassificationTrainPiece": {
         "name": "ImageClassificationTrainPiece",
         "dependency": {
-            "dockerfile": "Dockerfile.tensorflow-gpu",
+            "dockerfile": "Dockerfile_tensorflow-gpu",
             "requirements_file": "requirements_tensorflow.txt"
         },
         "tags": [
