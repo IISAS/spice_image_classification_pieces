@@ -28,9 +28,9 @@ logger = logging.getLogger(__name__)
 class ImageClassificationInferencePiece(BasePiece):
     def piece_function(self, input_data: InputModel):
 
-        model = tf.keras.models.load_model(os.path.join(input_data.model_path, 'best_model.keras'))
+        model = tf.keras.models.load_model(os.path.join(input_data.saved_model_path, 'best_model.keras'))
 
-        with open(os.path.join(input_data.model_path, 'config.json'))as f:
+        with open(os.path.join(input_data.saved_model_path, 'config.json')) as f:
             cfg = json.load(f)
 
         results = []
@@ -47,4 +47,3 @@ class ImageClassificationInferencePiece(BasePiece):
         return OutputModel(
             classification_results=results
         )
-
