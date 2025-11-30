@@ -41,7 +41,7 @@ def run_piece(
 @skip_envs('github')
 def test_ImageClassificationTrainPiece():
     piece_kwargs = {
-        'train_data_path': '/home/michal-skalican/Projects/SPICE/spice_domino_pieces/sample_data',
+        'train_data_path': 'D:\\data\\nozzle\\trainset',
         'image_size': (256, 256),
         'validation_data_path': None,
         'validation_split': 0.2,

@@ -2,10 +2,23 @@ from pydantic import BaseModel, Field
 
 
 class InputModel(BaseModel):
-    input_image_path: str = Field(title="input image path")
-    output_image_path: str = Field(title="output image path")
-    factor: float = Field(title="brightness factor", description="Multiplier for brightness (e.g., 2.0)")
+    input_image_path: str = Field(
+        title="Input image path",
+        description="Path to the source image file on disk."
+    )
+    output_image_path: str = Field(
+        title="Output image path",
+        description="Where to save the enhanced image (parent folders are created if missing)."
+    )
+    factor: float = Field(
+        title="Brightness factor",
+        description=">1.0 increases brightness, <1.0 decreases; 1.0 leaves the image unchanged.",
+        default=1.0,
+    )
 
 
 class OutputModel(BaseModel):
-    output_image_path: str = Field(description="Path to the saved output image.")
+    output_image_path: str = Field(
+        title="Output image path",
+        description="Path to the saved output image."
+    )
