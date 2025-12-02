@@ -5,13 +5,13 @@ from domino.testing.utils import skip_envs
 
 
 def run_piece(
-    model_path: str,
+    saved_model_path: str,
     inference_data_path: str,
 ):
     return piece_dry_run(
         piece_name="ImageClassificationInferencePiece",
         input_data={
-            'model_path': model_path,
+            'saved_model_path': saved_model_path,
             'inference_data_path': inference_data_path,
         }
     )
@@ -20,8 +20,8 @@ def run_piece(
 @skip_envs('github')
 def test_ImageClassificationInferencePiece():
     piece_kwargs = {
-        'model_path': 'dry_run_results/trained_model',
-        'inference_data_path': 'inference_data'
+        'saved_model_path': 'dry_run_results/trained_model',
+        'inference_data_path': 'D:\\data\\nozzle\\test\\inference'
     }
     output = run_piece(
         **piece_kwargs
@@ -29,4 +29,3 @@ def test_ImageClassificationInferencePiece():
 
     assert isinstance(output['classification_results'], list)
     assert all([isinstance(item, dict) for item in output['classification_results']])
-

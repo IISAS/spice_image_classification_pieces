@@ -6,9 +6,9 @@ class InputModel(BaseModel):
     ImageClassificationInferencePiece Input Model
     """
 
-    model_path: str = Field(
-        title="model path",
-        description="Path to the saved model.",
+    saved_model_path: str = Field(
+        title="saved model path",
+        description="Path to the saved model directory.",
         default="",
     )
     inference_data_path: str = Field(

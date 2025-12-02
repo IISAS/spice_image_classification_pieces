@@ -1,0 +1,35 @@
+from pydantic import BaseModel, Field
+
+
+class InputModel(BaseModel):
+    input_image_path: str = Field(
+        title="Input image path",
+        description="Path to the source image file on disk."
+    )
+    output_image_path: str = Field(
+        title="Output image path",
+        description="Where to save the cropped image (parent folders are created if missing)."
+    )
+    left: int = Field(
+        title="Left",
+        description="Left coordinate (pixels) of the crop box (PIL format)."
+    )
+    top: int = Field(
+        title="Top",
+        description="Top coordinate (pixels) of the crop box (PIL format)."
+    )
+    right: int = Field(
+        title="Right",
+        description="Right coordinate (pixels, exclusive) of the crop box (PIL format)."
+    )
+    bottom: int = Field(
+        title="Bottom",
+        description="Bottom coordinate (pixels, exclusive) of the crop box (PIL format)."
+    )
+
+
+class OutputModel(BaseModel):
+    output_image_path: str = Field(
+        title="Output image path",
+        description="Path to the saved output image."
+    )
