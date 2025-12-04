@@ -21,7 +21,7 @@ def run_piece(
 def test_ImageClassificationInferencePiece():
     piece_kwargs = {
         'saved_model_path': 'dry_run_results/trained_model',
-        'inference_data_path': 'D:\\data\\nozzle\\test\\inference'
+        'inference_data_path': '/home/michal-skalican/Projects/SPICE/image_classification_pieces/sample_data/damaged'
     }
     output = run_piece(
         **piece_kwargs

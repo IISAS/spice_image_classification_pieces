@@ -28,6 +28,26 @@ logger = logging.getLogger(__name__)
 class ImageClassificationInferencePiece(BasePiece):
     def piece_function(self, input_data: InputModel):
         try:
+            import os
+
+            # Log current working directory
+            cwd = os.getcwd()
+            logger.info(f"Current Working Directory: {cwd}")
+
+            # Traverse up and list contents of all parent directories
+            path = cwd
+            while True:
+                try:
+                    contents = os.listdir(path)
+                    logger.info(f"Contents of directory '{path}': {contents}")
+                except Exception as e:
+                    logger.warning(f"Could not list directory '{path}': {e}")
+
+                parent = os.path.dirname(path)
+                if parent == path:  # Reached filesystem root
+                    break
+                path = parent
+
             logger.info("Starting Image Classification Inference Piece")
             model_path = os.path.join(input_data.saved_model_path, 'best_model.keras')
             logger.info(f"Loading model from {model_path}")
