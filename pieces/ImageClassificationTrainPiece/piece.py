@@ -98,91 +98,101 @@ class ImageClassificationTrainPiece(BasePiece):
         return model
 
     def piece_function(self, input_data: InputModel):
-        logger.debug('piece function')
+        try:
+            logger.info("Starting Image Classification Train Piece")
+            if bool(input_data.validation_split) == bool(input_data.validation_data_path):
+                raise ValueError(
+                    "Exactly one method of creating validation set must be specified: "
+                    "either 'validation_split' or 'validation_data_path'."
+                )
 
-        if bool(input_data.validation_split) == bool(input_data.validation_data_path):
-            raise ValueError(
-                "Exactly one method of creating validation set must be specified: "
-                "either 'validation_split' or 'validation_data_path'."
+            logger.info("Loading image dataset")
+            if input_data.validation_split:
+                train, validation = self._read_image_dataset(
+                    input_data.train_data_path,
+                    validation_split=0.2,
+                    batch_size=input_data.batch_size,
+                    image_size=tuple(input_data.image_size)
+                )
+            else:
+                train = self._read_image_dataset(input_data.train_data_path, batch_size=input_data.batch_size)
+                validation = self._read_image_dataset(input_data.validation_data_path, batch_size=input_data.batch_size)
+
+            input_shape = train.element_spec[0].shape[1:]  # (height, width, channels)
+            num_classes = len(train.class_names)
+            class_names = train.class_names
+            logger.info(f"Detected classes: {class_names}")
+
+            train = train.prefetch(tf.data.AUTOTUNE)
+
+            logger.info("Building model")
+            m = self._build_model(
+                input_shape=input_shape,
+                num_classes=num_classes,
+                num_layers=input_data.num_layers,
+                filters_per_layer=input_data.filters_per_layer,
+                kernel_sizes=input_data.kernel_sizes,
+                dropout_rate=input_data.dropout_rate
             )
 
-        if input_data.validation_split:
-            train, validation = self._read_image_dataset(
-                input_data.train_data_path,
-                validation_split=0.2,
+            best_model_file_path = os.path.join(Path(self.results_path), 'trained_model', 'best_model.keras')
+            callbacks = [
+                keras.callbacks.ModelCheckpoint(
+                    best_model_file_path, save_best_only=True, monitor="val_loss"
+                ),
+                keras.callbacks.ReduceLROnPlateau(
+                    monitor="val_loss", factor=0.5, patience=100, min_lr=0.0001
+                ),
+                keras.callbacks.EarlyStopping(monitor="val_loss", patience=input_data.early_stop_patience, verbose=1),
+            ]
+
+            logger.info("Starting training")
+            history = m.fit(
+                train,
+                validation_data=validation,
                 batch_size=input_data.batch_size,
-                image_size=tuple(input_data.image_size)
+                epochs=input_data.epochs,
+                callbacks=callbacks,
+                verbose=1,
             )
-        else:
-            train = self._read_image_dataset(input_data.train_data_path, batch_size=input_data.batch_size)
-            validation = self._read_image_dataset(input_data.validation_data_path, batch_size=input_data.batch_size)
+            logger.info("Training finished")
 
-        input_shape = train.element_spec[0].shape[1:]  # (height, width, channels)
-        num_classes = len(train.class_names)
-        class_names = train.class_names
+            last_model_file_path = os.path.join(Path(self.results_path), 'trained_model', 'last_model.keras')
+            m.save(last_model_file_path)
 
-        train = train.prefetch(tf.data.AUTOTUNE)
+            config_path = os.path.join(self.results_path, 'trained_model', 'config.json')
+            with open(config_path, "w") as f:
+                cfg = dict(input_data)
+                cfg['class_mapping'] = {i: name for i, name in enumerate(class_names)}
+                json.dump(cfg, f)
+            logger.info(f"Configuration saved to {config_path}")
 
-        m = self._build_model(
-            input_shape=input_shape,
-            num_classes=num_classes,
-            num_layers=input_data.num_layers,
-            filters_per_layer=input_data.filters_per_layer,
-            kernel_sizes=input_data.kernel_sizes,
-            dropout_rate=input_data.dropout_rate
-        )
+            metric = "sparse_categorical_accuracy"
+            plt.figure()
+            plt.plot(history.history[metric])
+            plt.plot(history.history["val_" + metric])
+            plt.title("Model " + metric)
+            plt.ylabel(metric, fontsize="large")
+            plt.xlabel("epoch", fontsize="large")
+            plt.legend(["train", "val"], loc="best")
 
-        best_model_file_path = os.path.join(Path(self.results_path), 'trained_model', 'best_model.keras')
-        callbacks = [
-            keras.callbacks.ModelCheckpoint(
-                best_model_file_path, save_best_only=True, monitor="val_loss"
-            ),
-            keras.callbacks.ReduceLROnPlateau(
-                monitor="val_loss", factor=0.5, patience=100, min_lr=0.0001
-            ),
-            keras.callbacks.EarlyStopping(monitor="val_loss", patience=input_data.early_stop_patience, verbose=1),
-        ]
+            fig_path = os.path.join(Path(self.results_path), f"training_{metric}.png")
+            plt.savefig(fig_path, dpi=300, bbox_inches="tight")
+            plt.close()
+            logger.info(f"Training plot saved to {fig_path}")
 
-        history = m.fit(
-            train,
-            validation_data=validation,
-            batch_size=input_data.batch_size,
-            epochs=input_data.epochs,
-            callbacks=callbacks,
-            verbose=1,
-        )
+            # Set display result
+            self.display_result = {
+                'file_type': 'png',
+                'file_path': fig_path
+            }
 
-        last_model_file_path = os.path.join(Path(self.results_path), 'trained_model', 'last_model.keras')
-        m.save(last_model_file_path)
-
-        config_path = os.path.join(self.results_path, 'trained_model', 'config.json')
-        with open(config_path, "w") as f:
-            cfg = dict(input_data)
-            cfg['class_mapping'] = {i: name for i, name in enumerate(class_names)}
-            json.dump(cfg, f)
-
-        metric = "sparse_categorical_accuracy"
-        plt.figure()
-        plt.plot(history.history[metric])
-        plt.plot(history.history["val_" + metric])
-        plt.title("Model " + metric)
-        plt.ylabel(metric, fontsize="large")
-        plt.xlabel("epoch", fontsize="large")
-        plt.legend(["train", "val"], loc="best")
-
-        fig_path = os.path.join(Path(self.results_path), f"training_{metric}.png")
-        plt.savefig(fig_path, dpi=300, bbox_inches="tight")
-        plt.close()
-
-        # Set display result
-        self.display_result = {
-            'file_type': 'png',
-            'file_path': fig_path
-        }
-
-        # Return output
-        return OutputModel(
-            best_model_file_path=best_model_file_path,
-            last_model_file_path=last_model_file_path,
-            config_path=config_path,
-        )
+            # Return output
+            return OutputModel(
+                best_model_file_path=best_model_file_path,
+                last_model_file_path=last_model_file_path,
+                config_path=config_path,
+            )
+        except Exception as e:
+            logger.exception(f"An error occurred during training: {e}")
+            raise e

@@ -30,10 +30,23 @@ _ROTATE_MAP = {
 
 class ImageRotatePiece(BasePiece):
     def piece_function(self, input_data: InputModel):
-        if input_data.rotation not in _ROTATE_MAP:
-            raise ValueError("rotation must be one of 0, 90, 180, 270")
-        img = open_image_rgb(input_data.input_image_path)
-        method = _ROTATE_MAP[input_data.rotation]
-        out = img if method is None else img.transpose(method)
-        save_image_rgb(input_data.output_image_path, out)
-        return OutputModel(output_image_path=input_data.output_image_path)
+        try:
+            if input_data.rotation not in _ROTATE_MAP:
+                error_msg = "rotation must be one of 0, 90, 180, 270"
+                logger.error(error_msg)
+                raise ValueError(error_msg)
+
+            logger.info(f"Opening image from: {input_data.input_image_path}")
+            img = open_image_rgb(input_data.input_image_path)
+            method = _ROTATE_MAP[input_data.rotation]
+
+            logger.info(f"Rotating image by {input_data.rotation} degrees")
+            out = img if method is None else img.transpose(method)
+
+            logger.info(f"Saving rotated image to: {input_data.output_image_path}")
+            save_image_rgb(input_data.output_image_path, out)
+
+            return OutputModel(output_image_path=input_data.output_image_path)
+        except Exception as e:
+            logger.exception(f"An error occurred in ImageRotatePiece: {e}")
+            raise e

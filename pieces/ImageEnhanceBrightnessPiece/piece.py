@@ -22,7 +22,17 @@ logger = logging.getLogger(__name__)
 
 class ImageEnhanceBrightnessPiece(BasePiece):
     def piece_function(self, input_data: InputModel):
-        img = open_image(input_data.input_image_path)
-        out = ImageEnhance.Brightness(img).enhance(input_data.factor)
-        save_image_rgb(input_data.output_image_path, out)
-        return OutputModel(output_image_path=input_data.output_image_path)
+        try:
+            logger.info(f"Opening image from: {input_data.input_image_path}")
+            img = open_image(input_data.input_image_path)
+
+            logger.info(f"Enhancing brightness with factor={input_data.factor}")
+            out = ImageEnhance.Brightness(img).enhance(input_data.factor)
+
+            logger.info(f"Saving enhanced image to: {input_data.output_image_path}")
+            save_image_rgb(input_data.output_image_path, out)
+
+            return OutputModel(output_image_path=input_data.output_image_path)
+        except Exception as e:
+            logger.exception(f"An error occurred in ImageEnhanceBrightnessPiece: {e}")
+            raise e

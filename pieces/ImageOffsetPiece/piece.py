@@ -21,7 +21,17 @@ logger = logging.getLogger(__name__)
 
 class ImageOffsetPiece(BasePiece):
     def piece_function(self, input_data: InputModel):
-        img = open_image(input_data.input_image_path)
-        out = translate_image(img, input_data.dx, input_data.dy)
-        save_image(input_data.output_image_path, out)
-        return OutputModel(output_image_path=input_data.output_image_path)
+        try:
+            logger.info(f"Opening image from: {input_data.input_image_path}")
+            img = open_image(input_data.input_image_path)
+
+            logger.info(f"Translating image by dx={input_data.dx}, dy={input_data.dy}")
+            out = translate_image(img, input_data.dx, input_data.dy)
+
+            logger.info(f"Saving offset image to: {input_data.output_image_path}")
+            save_image(input_data.output_image_path, out)
+
+            return OutputModel(output_image_path=input_data.output_image_path)
+        except Exception as e:
+            logger.exception(f"An error occurred in ImageOffsetPiece: {e}")
+            raise e
