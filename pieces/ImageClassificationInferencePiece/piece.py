@@ -30,21 +30,15 @@ class ImageClassificationInferencePiece(BasePiece):
         try:
             import os
 
-            # Log current working directory
             cwd = os.getcwd()
             logger.info(f"Current Working Directory: {cwd}")
 
             path = cwd
             while True:
-                logger.info(f"--- Recursive listing for: {path} ---")
                 for root, dirs, files in os.walk(path):
-                    # Calculate depth to format the log like a tree
-                    level = root.replace(path, '').count(os.sep)
-                    indent = ' ' * 4 * (level)
-                    logger.info(f"{indent}{os.path.basename(root)}/")
-                    subindent = ' ' * 4 * (level + 1)
-                    for f in files:
-                        logger.info(f"{subindent}{f}")
+                    if "utils.py" in files:
+                        full_path = os.path.join(root, "utils.py")
+                        logger.info(f"Found utils.py at: {full_path}")
 
                 parent = os.path.dirname(path)
                 if parent == path:  # Reached filesystem root
