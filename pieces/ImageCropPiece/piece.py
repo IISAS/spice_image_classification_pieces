@@ -1,12 +1,8 @@
 import logging
-import os
-import sys
 
 from domino.base_piece import BasePiece
 
 from .models import InputModel, OutputModel
-
-sys.path.append(os.path.abspath("/home/domino/pieces_repository"))
 
 logging.basicConfig(
     level=logging.INFO,
