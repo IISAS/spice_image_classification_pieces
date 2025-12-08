@@ -28,22 +28,12 @@ logger = logging.getLogger(__name__)
 class ImageClassificationInferencePiece(BasePiece):
     def piece_function(self, input_data: InputModel):
         try:
-            import os
+            try:
+                from pieces_repository.pieces.utils import open_image, save_image, clamp_crop_box
+            except Exception as e:
+                logger.exception(f"An error occurred during inference: {e}")
+                raise e
 
-            cwd = os.getcwd()
-            logger.info(f"Current Working Directory: {cwd}")
-
-            path = cwd
-            while True:
-                for root, dirs, files in os.walk(path):
-                    if "utils.py" in files:
-                        full_path = os.path.join(root, "utils.py")
-                        logger.info(f"Found utils.py at: {full_path}")
-
-                parent = os.path.dirname(path)
-                if parent == path:  # Reached filesystem root
-                    break
-                path = parent
 
             logger.info("Starting Image Classification Inference Piece")
             model_path = os.path.join(input_data.saved_model_path, 'best_model.keras')
