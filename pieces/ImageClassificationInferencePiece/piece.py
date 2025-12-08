@@ -2,6 +2,7 @@ import logging
 import json
 import os
 
+
 from domino.base_piece import BasePiece
 import numpy as np
 
@@ -28,13 +29,6 @@ logger = logging.getLogger(__name__)
 class ImageClassificationInferencePiece(BasePiece):
     def piece_function(self, input_data: InputModel):
         try:
-            try:
-                from pieces_repository.pieces.utils import open_image, save_image, clamp_crop_box
-            except Exception as e:
-                logger.exception(f"An error occurred during inference: {e}")
-                raise e
-
-
             logger.info("Starting Image Classification Inference Piece")
             model_path = os.path.join(input_data.saved_model_path, 'best_model.keras')
             logger.info(f"Loading model from {model_path}")

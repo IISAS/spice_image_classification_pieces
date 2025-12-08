@@ -1,14 +1,12 @@
 import logging
+import os
+import sys
 
 from domino.base_piece import BasePiece
 
 from .models import InputModel, OutputModel
 
-# Utils import (works in both Domino runtime and direct pytest runs)
-try:
-    from ..utils import open_image, save_image, clamp_crop_box
-except ImportError:  # pragma: no cover
-    from pieces.utils import open_image, save_image, clamp_crop_box
+sys.path.append(os.path.abspath("/home/domino/pieces_repository"))
 
 logging.basicConfig(
     level=logging.INFO,
@@ -17,6 +15,16 @@ logging.basicConfig(
     handlers=[]
 )
 logger = logging.getLogger(__name__)
+
+# Utils import (works in both Domino runtime and direct pytest runs)
+try:
+    from ..utils import open_image, save_image, clamp_crop_box
+except ImportError:  # pragma: no cover
+    try:
+        from pieces.utils import open_image, save_image, clamp_crop_box
+    except Exception as e:
+        logger.exception(f"An error occurred in ImageCropPiece: {e}")
+        raise e
 
 
 class ImageCropPiece(BasePiece):
