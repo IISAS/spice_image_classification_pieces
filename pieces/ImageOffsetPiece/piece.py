@@ -1,9 +1,7 @@
 import logging
 
-from domino.base_piece import BasePiece
-
-from .models import InputModel, OutputModel
-
+from .models import OutputModel
+from pieces.ImageProcessingBasePiece import ImageBasePiece
 
 logging.basicConfig(
     level=logging.INFO,
@@ -24,19 +22,11 @@ except Exception as e:
     raise e
 
 
-class ImageOffsetPiece(BasePiece):
-    def piece_function(self, input_data: InputModel):
-        try:
-            logger.info(f"Opening image from: {input_data.input_image_path}")
-            img = open_image(input_data.input_image_path)
+class ImageOffsetPiece(ImageBasePiece):
+    def process_image(self, file_path, output_path, input_data):
+        img = open_image(file_path)
+        out = translate_image(img, input_data.dx, input_data.dy)
+        save_image(output_path, out)
 
-            logger.info(f"Translating image by dx={input_data.dx}, dy={input_data.dy}")
-            out = translate_image(img, input_data.dx, input_data.dy)
-
-            logger.info(f"Saving offset image to: {input_data.output_image_path}")
-            save_image(input_data.output_image_path, out)
-
-            return OutputModel(output_image_path=input_data.output_image_path)
-        except Exception as e:
-            logger.exception(f"An error occurred in ImageOffsetPiece: {e}")
-            raise e
+    def return_output_model(self, input_data):
+        return OutputModel(output_image_path=input_data.output_image_path)

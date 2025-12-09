@@ -33,3 +33,25 @@ def test_ImageEnhanceContrastPiece(tmp_path):
     out = mpimg.imread(str(outp))
     assert out.std() > img.std()
     assert output['output_image_path'] == str(outp)
+
+@skip_envs('github')
+def test_ImageEnhanceContrastPiece_folder(tmp_path):
+    inp_dir = tmp_path / 'input_images'
+    out_dir = tmp_path / 'output_images'
+    os.makedirs(inp_dir, exist_ok=True)
+    os.makedirs(out_dir, exist_ok=True)
+
+    # create a simple gradient image to have some variance
+    x = np.linspace(0.3, 0.7, 50, dtype=float)
+    img = np.tile(x, (50, 1))
+
+    for i in range(10):
+        _write_img(str(inp_dir / f'in_{i}.png'), img)
+
+    output = run_piece(str(inp_dir), str(out_dir), 2.0)
+
+    for i in range(10):
+        out_path = out_dir / f'in_{i}.png'
+        assert os.path.exists(out_path)
+        out = mpimg.imread(str(out_path))
+        assert out.std() > img.std()

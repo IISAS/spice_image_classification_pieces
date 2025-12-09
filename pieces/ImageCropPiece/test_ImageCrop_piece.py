@@ -27,3 +27,24 @@ def test_ImageCropPiece(tmp_path):
     run_piece(str(inp), str(outp), 5, 6, 25, 16)
     out = mpimg.imread(str(outp))
     assert out.shape[0] == 10 and out.shape[1] == 20
+
+
+@skip_envs('github')
+def test_ImageCropPiece_folder(tmp_path):
+    inp_dir = tmp_path / 'input_images'
+    out_dir = tmp_path / 'output_images'
+    os.makedirs(inp_dir, exist_ok=True)
+    os.makedirs(out_dir, exist_ok=True)
+
+    img = np.zeros((20, 30, 3), dtype=float)
+
+    for i in range(10):
+        _write_img(str(inp_dir / f'in_{i}.png'), img)
+
+    run_piece(str(inp_dir), str(out_dir), 5, 6, 25, 16)
+
+    for i in range(10):
+        out_path = out_dir / f'in_{i}.png'
+        assert os.path.exists(out_path)
+        out = mpimg.imread(str(out_path))
+        assert out.shape[0] == 10 and out.shape[1] == 20

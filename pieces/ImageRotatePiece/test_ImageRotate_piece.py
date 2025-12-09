@@ -74,3 +74,70 @@ def test_ImageRotatePiece_pixel_positions(tmp_path, angle):
     assert np.allclose(out[rr, rc], (1, 0, 0), atol=1/255)
     assert np.allclose(out[gr, gc], (0, 1, 0), atol=1/255)
     assert np.allclose(out[br, bc], (0, 0, 1), atol=1/255)
+
+
+# ... existing code ...
+@skip_envs('github')
+@pytest.mark.parametrize("angle,shape_swap", [(0, False), (90, True), (180, False), (270, True)])
+def test_ImageRotatePiece_shape_folder(tmp_path, angle, shape_swap):
+    inp_dir = tmp_path / 'input_images'
+    out_dir = tmp_path / 'output_images'
+    os.makedirs(inp_dir, exist_ok=True)
+    os.makedirs(out_dir, exist_ok=True)
+
+    img = np.zeros((2, 3, 3), dtype=float)
+    img[0, 0] = 1.0
+
+    for i in range(10):
+        _write_img(str(inp_dir / f'in_{i}.png'), img)
+
+    run_piece(str(inp_dir), str(out_dir), angle)
+
+    for i in range(10):
+        out_path = out_dir / f'in_{i}.png'
+        assert os.path.exists(out_path)
+        out = mpimg.imread(str(out_path))
+        if shape_swap:
+            assert out.shape[0] == img.shape[1] and out.shape[1] == img.shape[0]
+        else:
+            assert out.shape[:2] == img.shape[:2]
+
+
+# ... existing code ...
+
+@skip_envs('github')
+@pytest.mark.parametrize("angle", [0, 90, 180, 270])
+def test_ImageRotatePiece_pixel_positions_folder(tmp_path, angle):
+    inp_dir = tmp_path / 'input_images'
+    out_dir = tmp_path / 'output_images'
+    os.makedirs(inp_dir, exist_ok=True)
+    os.makedirs(out_dir, exist_ok=True)
+
+    H, W = 5, 4
+    img = np.zeros((H, W, 3), dtype=float)
+    # Distinct colored pixels to track across rotations
+    red_rc = (1, 2)
+    green_rc = (4, 0)
+    blue_rc = (0, 3)
+    img[red_rc] = (1.0, 0.0, 0.0)
+    img[green_rc] = (0.0, 1.0, 0.0)
+    img[blue_rc] = (0.0, 0.0, 1.0)
+
+    for i in range(10):
+        _write_img(str(inp_dir / f'in_{i}.png'), img)
+
+    run_piece(str(inp_dir), str(out_dir), angle)
+
+    k = (angle // 90) % 4
+    rr, rc = _rot90_coords(H, W, *red_rc, k)
+    gr, gc = _rot90_coords(H, W, *green_rc, k)
+    br, bc = _rot90_coords(H, W, *blue_rc, k)
+
+    for i in range(10):
+        out_path = out_dir / f'in_{i}.png'
+        assert os.path.exists(out_path)
+        out = mpimg.imread(str(out_path))
+
+        assert np.allclose(out[rr, rc], (1, 0, 0), atol=1/255)
+        assert np.allclose(out[gr, gc], (0, 1, 0), atol=1/255)
+        assert np.allclose(out[br, bc], (0, 0, 1), atol=1/255)

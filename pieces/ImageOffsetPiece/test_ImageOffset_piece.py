@@ -28,3 +28,24 @@ def test_ImageOffsetPiece_basic(tmp_path):
     run_piece(str(inp), str(outp), dx=1, dy=2)
     out = mpimg.imread(str(outp))
     assert out[3, 2].sum() > 0.9
+
+
+@skip_envs('github')
+def test_ImageOffsetPiece_folder(tmp_path):
+    inp_dir = tmp_path / 'input_images'
+    out_dir = tmp_path / 'output_images'
+    os.makedirs(inp_dir, exist_ok=True)
+    os.makedirs(out_dir, exist_ok=True)
+
+    for i in range(10):
+        img = np.zeros((6, 6, 3), dtype=float)
+        img[1, 1] = 1.0
+        _write_img(str(inp_dir / f'in_{i}.png'), img)
+
+    run_piece(str(inp_dir), str(out_dir), dx=1, dy=2)
+
+    for i in range(10):
+        out_path = out_dir / f'in_{i}.png'
+        assert os.path.exists(out_path)
+        out = mpimg.imread(str(out_path))
+        assert out[3, 2].sum() > 0.9

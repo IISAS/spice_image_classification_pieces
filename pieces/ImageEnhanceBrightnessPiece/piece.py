@@ -1,11 +1,9 @@
 import logging
 
-from domino.base_piece import BasePiece
 from PIL import ImageEnhance
 
-from .models import InputModel, OutputModel
-
-
+from .models import OutputModel
+from pieces.ImageProcessingBasePiece import ImageBasePiece
 
 logging.basicConfig(
     level=logging.INFO,
@@ -26,19 +24,11 @@ except Exception as e:
     raise e
 
 
-class ImageEnhanceBrightnessPiece(BasePiece):
-    def piece_function(self, input_data: InputModel):
-        try:
-            logger.info(f"Opening image from: {input_data.input_image_path}")
-            img = open_image(input_data.input_image_path)
+class ImageEnhanceBrightnessPiece(ImageBasePiece):
+    def process_image(self, file_path, output_path, input_data):
+        img = open_image(file_path)
+        out = ImageEnhance.Brightness(img).enhance(input_data.factor)
+        save_image_rgb(output_path, out)
 
-            logger.info(f"Enhancing brightness with factor={input_data.factor}")
-            out = ImageEnhance.Brightness(img).enhance(input_data.factor)
-
-            logger.info(f"Saving enhanced image to: {input_data.output_image_path}")
-            save_image_rgb(input_data.output_image_path, out)
-
-            return OutputModel(output_image_path=input_data.output_image_path)
-        except Exception as e:
-            logger.exception(f"An error occurred in ImageEnhanceBrightnessPiece: {e}")
-            raise e
+    def return_output_model(self, input_data):
+        return OutputModel(output_image_path=input_data.output_image_path)

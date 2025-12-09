@@ -18,7 +18,7 @@ def run_piece(input_image_path: str, output_image_path: str):
 
 
 @skip_envs('github')
-def test_ImageToGrayPiece(tmp_path):
+def test_ImageToGrayPiece_single_image(tmp_path):
     inp = tmp_path / 'in.png'
     outp = tmp_path / 'out.png'
     img = np.zeros((5, 6, 3), dtype=float)
@@ -27,3 +27,23 @@ def test_ImageToGrayPiece(tmp_path):
     run_piece(str(inp), str(outp))
     out = mpimg.imread(str(outp))
     assert out.ndim == 2 or out.shape[-1] == 3
+
+
+@skip_envs('github')
+def test_ImageToGrayPiece_folder(tmp_path):
+    inp_dir = tmp_path / 'input_images'
+    out_dir = tmp_path / 'output_images'
+    os.makedirs(inp_dir, exist_ok=True)
+
+    for i in range(10):
+        img = np.zeros((5, 6, 3), dtype=float)
+        img[..., 0] = 1.0  # red
+        _write_img(str(inp_dir / f'in_{i}.png'), img)
+
+    run_piece(str(inp_dir), str(out_dir))
+
+    for i in range(10):
+        out_path = out_dir / f'in_{i}.png'
+        assert os.path.exists(out_path)
+        out = mpimg.imread(str(out_path))
+        assert out.ndim == 2 or out.shape[-1] == 3

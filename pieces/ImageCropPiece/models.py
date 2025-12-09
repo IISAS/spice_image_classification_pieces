@@ -4,11 +4,11 @@ from pydantic import BaseModel, Field
 class InputModel(BaseModel):
     input_image_path: str = Field(
         title="Input image path",
-        description="Path to the source image file on disk."
+        description="Path to the source image file or folder of images on disk."
     )
     output_image_path: str = Field(
         title="Output image path",
-        description="Where to save the cropped image (parent folders are created if missing)."
+        description="Where to save the enhanced image(s) (parent folders are created if missing)."
     )
     left: int = Field(
         title="Left",

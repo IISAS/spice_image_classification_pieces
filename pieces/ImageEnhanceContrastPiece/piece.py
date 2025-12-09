@@ -1,9 +1,9 @@
 import logging
 
-from domino.base_piece import BasePiece
 from PIL import ImageEnhance
 
 from .models import InputModel, OutputModel
+from pieces.ImageProcessingBasePiece import ImageBasePiece
 
 logging.basicConfig(
     level=logging.INFO,
@@ -13,7 +13,6 @@ logging.basicConfig(
 )
 logger = logging.getLogger(__name__)
 
-# Utils import (works in both Domino runtime and direct pytest runs)
 try:
     try:
         from ..utils import open_image, save_image_rgb
@@ -23,19 +22,14 @@ except Exception as e:
     logger.exception(f"Could not import utils.py: {e}")
     raise e
 
-class ImageEnhanceContrastPiece(BasePiece):
-    def piece_function(self, input_data: InputModel):
-        try:
-            logger.info(f"Opening image from: {input_data.input_image_path}")
-            img = open_image(input_data.input_image_path)
+class ImageEnhanceContrastPiece(ImageBasePiece):
+    def process_image(self, file_path, output_path, input_data: InputModel):
 
-            logger.info(f"Enhancing contrast with factor={input_data.factor}")
-            out = ImageEnhance.Contrast(img).enhance(input_data.factor)
+        img = open_image(file_path)
+        out = ImageEnhance.Contrast(img).enhance(input_data.factor)
 
-            logger.info(f"Saving enhanced image to: {input_data.output_image_path}")
-            save_image_rgb(input_data.output_image_path, out)
+        save_image_rgb(output_path, out)
 
-            return OutputModel(output_image_path=input_data.output_image_path)
-        except Exception as e:
-            logger.exception(f"An error occurred in ImageEnhanceContrastPiece: {e}")
-            raise e
+    def return_output_model(self, input_data):
+        return OutputModel(output_image_path=input_data.output_image_path)
+
