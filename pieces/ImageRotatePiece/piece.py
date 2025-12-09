@@ -5,11 +5,6 @@ from PIL import Image
 
 from .models import InputModel, OutputModel
 
-# Utils import (works in both Domino runtime and direct pytest runs)
-try:
-    from ..utils import open_image_rgb, save_image_rgb
-except ImportError:  # pragma: no cover
-    from pieces.utils import open_image_rgb, save_image_rgb
 
 logging.basicConfig(
     level=logging.INFO,
@@ -26,6 +21,17 @@ _ROTATE_MAP = {
     180: Image.ROTATE_180,
     270: Image.ROTATE_270,
 }
+
+# Utils import (works in both Domino runtime and direct pytest runs)
+try:
+    try:
+        from ..utils import open_image_rgb, save_image_rgb
+    except ImportError:  # pragma: no cover
+        from pieces.utils import open_image_rgb, save_image_rgb
+except Exception as e:
+    logger.exception(f"Could not import utils.py: {e}")
+    raise e
+
 
 
 class ImageRotatePiece(BasePiece):

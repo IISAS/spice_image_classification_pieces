@@ -1,6 +1,6 @@
 from typing import List, Tuple
+from pathlib import Path
 
-import numpy as np
 from domino.testing import piece_dry_run
 from domino.testing.utils import skip_envs
 from tensorflow import keras
@@ -41,7 +41,7 @@ def run_piece(
 @skip_envs('github')
 def test_ImageClassificationTrainPiece():
     piece_kwargs = {
-        'train_data_path': '/home/michal-skalican/Projects/SPICE/image_classification_pieces/sample_data',
+        'train_data_path': str(Path('test_data')),
         'image_size': [256, 256],
         'validation_data_path': None,
         'validation_split': 0.2,

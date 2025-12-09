@@ -1,4 +1,4 @@
-import json
+from pathlib import Path
 
 from domino.testing import piece_dry_run
 from domino.testing.utils import skip_envs
@@ -21,7 +21,7 @@ def run_piece(
 def test_ImageClassificationInferencePiece():
     piece_kwargs = {
         'saved_model_path': 'dry_run_results/trained_model',
-        'inference_data_path': '/home/michal-skalican/Projects/SPICE/image_classification_pieces/sample_data/damaged'
+        'inference_data_path': str(Path("test_data/damaged"))
     }
     output = run_piece(
         **piece_kwargs

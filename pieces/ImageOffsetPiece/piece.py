@@ -4,11 +4,6 @@ from domino.base_piece import BasePiece
 
 from .models import InputModel, OutputModel
 
-# Utils import (works in both Domino runtime and direct pytest runs)
-try:
-    from ..utils import open_image, save_image, translate_image
-except ImportError:  # pragma: no cover
-    from pieces.utils import open_image, save_image, translate_image
 
 logging.basicConfig(
     level=logging.INFO,
@@ -17,6 +12,16 @@ logging.basicConfig(
     handlers=[]
 )
 logger = logging.getLogger(__name__)
+
+# Utils import (works in both Domino runtime and direct pytest runs)
+try:
+    try:
+        from ..utils import open_image, save_image, translate_image
+    except ImportError:  # pragma: no cover
+        from pieces.utils import open_image, save_image, translate_image
+except Exception as e:
+    logger.exception(f"Could not import utils.py: {e}")
+    raise e
 
 
 class ImageOffsetPiece(BasePiece):

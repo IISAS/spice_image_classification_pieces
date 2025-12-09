@@ -5,12 +5,6 @@ from PIL import ImageEnhance
 
 from .models import InputModel, OutputModel
 
-# Utils import (works in both Domino runtime and direct pytest runs)
-try:
-    from ..utils import open_image, save_image_rgb
-except ImportError:  # pragma: no cover
-    from pieces.utils import open_image, save_image_rgb
-
 logging.basicConfig(
     level=logging.INFO,
     format="%(asctime)s [%(levelname)s] %(name)s: %(message)s",
@@ -19,6 +13,15 @@ logging.basicConfig(
 )
 logger = logging.getLogger(__name__)
 
+# Utils import (works in both Domino runtime and direct pytest runs)
+try:
+    try:
+        from ..utils import open_image, save_image_rgb
+    except ImportError:  # pragma: no cover
+        from pieces.utils import open_image, save_image_rgb
+except Exception as e:
+    logger.exception(f"Could not import utils.py: {e}")
+    raise e
 
 class ImageEnhanceContrastPiece(BasePiece):
     def piece_function(self, input_data: InputModel):
