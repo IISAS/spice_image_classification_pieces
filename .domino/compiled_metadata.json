@@ -41,21 +41,24 @@
                     "type": "string"
                 },
                 "output_image_path": {
-                    "description": "Where to save the enhanced image(s) (parent folders are created if missing).",
-                    "title": "Output image path",
+                    "description": "Folder where to save the enhanced image(s).",
+                    "title": "Output folder path",
                     "type": "string"
                 },
                 "rotation": {
                     "default": 0,
                     "description": "Rotation angle in degrees; must be one of 0, 90, 180, 270 (counter-clockwise).",
-                    "enum": [
-                        0,
-                        90,
-                        180,
-                        270
-                    ],
+                    "items": {
+                        "enum": [
+                            0,
+                            90,
+                            180,
+                            270
+                        ],
+                        "type": "integer"
+                    },
                     "title": "Rotation (degrees)",
-                    "type": "integer"
+                    "type": "array"
                 }
             },
             "required": [
@@ -68,8 +71,8 @@
         "output_schema": {
             "properties": {
                 "output_image_path": {
-                    "description": "Path to the saved output image.",
-                    "title": "Output image path",
+                    "description": "Path to the folder with saved output image(s).",
+                    "title": "Output folder path",
                     "type": "string"
                 }
             },
