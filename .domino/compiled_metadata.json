@@ -36,12 +36,12 @@
         "input_schema": {
             "properties": {
                 "input_image_path": {
-                    "description": "Path to the source image file on disk.",
+                    "description": "Path to the source image file or folder of images on disk.",
                     "title": "Input image path",
                     "type": "string"
                 },
                 "output_image_path": {
-                    "description": "Where to save the rotated image (parent folders are created if missing).",
+                    "description": "Where to save the enhanced image(s) (parent folders are created if missing).",
                     "title": "Output image path",
                     "type": "string"
                 },
@@ -199,12 +199,12 @@
         "input_schema": {
             "properties": {
                 "input_image_path": {
-                    "description": "Path to the source image file on disk.",
+                    "description": "Path to the source image file or folder of images on disk.",
                     "title": "Input image path",
                     "type": "string"
                 },
                 "output_image_path": {
-                    "description": "Where to save the enhanced image (parent folders are created if missing).",
+                    "description": "Where to save the enhanced image(s) (parent folders are created if missing).",
                     "title": "Output image path",
                     "type": "string"
                 },
@@ -276,12 +276,12 @@
         "input_schema": {
             "properties": {
                 "input_image_path": {
-                    "description": "Path to the source image file on disk.",
+                    "description": "Path to the source image file or folder of images on disk.",
                     "title": "Input image path",
                     "type": "string"
                 },
                 "output_image_path": {
-                    "description": "Where to save the grayscale image (mode 'L'). Parent folders are created if missing.",
+                    "description": "Where to save the enhanced image(s) (parent folders are created if missing).",
                     "title": "Output image path",
                     "type": "string"
                 }
@@ -524,12 +524,12 @@
         "input_schema": {
             "properties": {
                 "input_image_path": {
-                    "description": "Path to the source image file on disk.",
+                    "description": "Path to the source image file or folder of images on disk.",
                     "title": "Input image path",
                     "type": "string"
                 },
                 "output_image_path": {
-                    "description": "Where to save the cropped image (parent folders are created if missing).",
+                    "description": "Where to save the enhanced image(s) (parent folders are created if missing).",
                     "title": "Output image path",
                     "type": "string"
                 },
@@ -619,12 +619,12 @@
         "input_schema": {
             "properties": {
                 "input_image_path": {
-                    "description": "Path to the source image file on disk.",
+                    "description": "Path to the source image file or folder of images on disk.",
                     "title": "Input image path",
                     "type": "string"
                 },
                 "output_image_path": {
-                    "description": "Where to save the translated image (parent folders are created if missing).",
+                    "description": "Where to save the enhanced image(s) (parent folders are created if missing).",
                     "title": "Output image path",
                     "type": "string"
                 },
@@ -703,12 +703,12 @@
         "input_schema": {
             "properties": {
                 "input_image_path": {
-                    "description": "Path to the source image file on disk.",
+                    "description": "Path to the source image file or folder of images on disk.",
                     "title": "Input image path",
                     "type": "string"
                 },
                 "output_image_path": {
-                    "description": "Where to save the enhanced image (parent folders are created if missing).",
+                    "description": "Where to save the enhanced image(s) (parent folders are created if missing).",
                     "title": "Output image path",
                     "type": "string"
                 },
