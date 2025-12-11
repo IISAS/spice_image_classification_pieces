@@ -54,6 +54,7 @@ class ImageClassificationInferencePiece(BasePiece):
                 results.append({"image": img_name, "class_id": int(pred_class), "class": cfg["class_mapping"][str(pred_class)]})
 
             logger.info("Inference completed successfully")
+            logger.info(results)
             return OutputModel(
                 classification_results=results
             )
