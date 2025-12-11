@@ -49,6 +49,7 @@ class ImageBasePiece(BasePiece):
                 return self.return_output_model(input_data)
         except Exception as e:
             logger.exception(f"An error occurred in ImageOffsetPiece: {e}")
+            logger.info(f"{input_data}")
             raise e
 
     def process_image(self, file_path, output_path, input_data):
