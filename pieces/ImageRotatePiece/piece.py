@@ -47,8 +47,17 @@ class ImageRotatePiece(ImageBasePiece):
             method = _ROTATE_MAP[rotation]
             out = img if method is None else img.transpose(method)
 
-            base, ext = os.path.splitext(file_path)
-            save_path = os.path.join(output_path, f"{base.split(os.sep)[-1]}_{rotation}{ext}")
+            if not os.path.splitext(output_path)[1]:
+                _, file_name = file_path.split(os.sep)[:-1], file_path.split(os.sep)[-1]
+                path = output_path
+                base, ext = os.path.splitext(file_name)
+            else:
+                path, file_name = output_path.split(os.sep)[:-1], output_path.split(os.sep)[-1]
+                path = os.path.join('/', *path)
+                base, ext = os.path.splitext(file_name)
+
+
+            save_path = os.path.join(path, f"{base}_{rotation}{ext}")
 
             save_image_rgb(save_path, out)
 
