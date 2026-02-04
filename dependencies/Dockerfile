@@ -6,6 +6,7 @@ COPY pieces domino/pieces_repository/pieces
 COPY .domino domino/pieces_repository/.domino
 
 COPY dependencies/requirements.txt domino/pieces_repository/dependencies/
-RUN pip install --no-cache-dir -r domino/pieces_repository/dependencies/requirements.txt
+COPY dependencies/requirements-cpu.txt domino/pieces_repository/dependencies/
+RUN pip install --no-cache-dir -r domino/pieces_repository/dependencies/requirements-cpu.txt
 
 ENV PYTHONPATH="/home/domino/pieces_repository:${PYTHONPATH}"
