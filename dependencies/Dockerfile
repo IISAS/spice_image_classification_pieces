@@ -1,4 +1,4 @@
-FROM ghcr.io/iisas/domino-base-piece:tensorflow-gpu
+FROM ghcr.io/iisas/domino-base-piece:latest
 
 # Need to copy pieces source code
 COPY config.toml domino/pieces_repository/

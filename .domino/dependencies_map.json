@@ -1,7 +1,7 @@
 {
     "group0": {
         "dependency": {
-            "dockerfile": "Dockerfile_default",
+            "dockerfile": "Dockerfile",
             "requirements_file": null
         },
         "pieces": [
