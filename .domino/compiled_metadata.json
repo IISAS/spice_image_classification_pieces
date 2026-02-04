@@ -2,7 +2,7 @@
     "ImageRotatePiece": {
         "name": "ImageRotatePiece",
         "dependency": {
-            "dockerfile": "Dockerfile_default",
+            "dockerfile": "Dockerfile",
             "requirements_file": null
         },
         "tags": [
@@ -88,8 +88,8 @@
     "ImageClassificationInferencePiece": {
         "name": "ImageClassificationInferencePiece",
         "dependency": {
-            "dockerfile": "Dockerfile_tensorflow-gpu",
-            "requirements_file": "requirements_tensorflow.txt"
+            "dockerfile": "Dockerfile.tensorflow-gpu",
+            "requirements_file": null
         },
         "tags": [
             "AI",
@@ -121,7 +121,8 @@
             "limits": {
                 "cpu": 500,
                 "memory": 512
-            }
+            },
+            "use_gpu": true
         },
         "input_schema": {
             "description": "ImageClassificationInferencePiece Input Model",
@@ -167,7 +168,7 @@
     "ImageEnhanceContrastPiece": {
         "name": "ImageEnhanceContrastPiece",
         "dependency": {
-            "dockerfile": "Dockerfile_default",
+            "dockerfile": "Dockerfile",
             "requirements_file": null
         },
         "tags": [
@@ -245,7 +246,7 @@
     "ImageToGrayPiece": {
         "name": "ImageToGrayPiece",
         "dependency": {
-            "dockerfile": "Dockerfile_default",
+            "dockerfile": "Dockerfile",
             "requirements_file": null
         },
         "tags": [
@@ -316,8 +317,8 @@
     "ImageClassificationTrainPiece": {
         "name": "ImageClassificationTrainPiece",
         "dependency": {
-            "dockerfile": "Dockerfile_tensorflow-gpu",
-            "requirements_file": "requirements_tensorflow.txt"
+            "dockerfile": "Dockerfile.tensorflow-gpu",
+            "requirements_file": null
         },
         "tags": [
             "AI",
@@ -349,7 +350,8 @@
             "limits": {
                 "cpu": 500,
                 "memory": 512
-            }
+            },
+            "use_gpu": true
         },
         "input_schema": {
             "description": "ImageClassificationTrainPiece Input Model",
@@ -493,7 +495,7 @@
     "ImageCropPiece": {
         "name": "ImageCropPiece",
         "dependency": {
-            "dockerfile": "Dockerfile_default",
+            "dockerfile": "Dockerfile",
             "requirements_file": null
         },
         "tags": [
@@ -588,7 +590,7 @@
     "ImageOffsetPiece": {
         "name": "ImageOffsetPiece",
         "dependency": {
-            "dockerfile": "Dockerfile_default",
+            "dockerfile": "Dockerfile",
             "requirements_file": null
         },
         "tags": [
@@ -671,7 +673,7 @@
     "ImageEnhanceBrightnessPiece": {
         "name": "ImageEnhanceBrightnessPiece",
         "dependency": {
-            "dockerfile": "Dockerfile_default",
+            "dockerfile": "Dockerfile",
             "requirements_file": null
         },
         "tags": [
