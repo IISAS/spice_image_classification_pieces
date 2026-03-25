@@ -10,6 +10,7 @@
             "ImageToGrayPiece",
             "ImageEnhanceContrastPiece",
             "ImageRotatePiece",
+            "ImageCircularCropPiece",
             "ImageEnhanceBrightnessPiece"
         ],
         "secrets": [],

@@ -670,6 +670,101 @@
         "secrets_schema": null,
         "source_url": "https://github.com/IISAS/spice_image_classification_pieces/tree/main/pieces/ImageRotatePiece"
     },
+    "ImageCircularCropPiece": {
+        "name": "ImageCircularCropPiece",
+        "dependency": {
+            "dockerfile": "Dockerfile",
+            "requirements_file": null
+        },
+        "tags": [
+            "image",
+            "preprocessing",
+            "crop"
+        ],
+        "style": {
+            "node_label": "Circular Crop",
+            "node_type": "default",
+            "node_style": {
+                "backgroundColor": "#ebebeb"
+            },
+            "useIcon": true,
+            "icon_class_name": "fa-duotone fa-crop",
+            "iconStyle": {
+                "cursor": "pointer"
+            }
+        },
+        "description": "Piece to crop an image to a fixed rectangle and keep only the centered inscribed circle.",
+        "container_resources": {
+            "requests": {
+                "cpu": 100,
+                "memory": 128
+            },
+            "limits": {
+                "cpu": 500,
+                "memory": 512
+            }
+        },
+        "input_schema": {
+            "properties": {
+                "input_image_path": {
+                    "description": "Path to the source image file or folder of images on disk.",
+                    "title": "Input image path",
+                    "type": "string"
+                },
+                "output_image_path": {
+                    "description": "Where to save the processed image(s).",
+                    "title": "Output image path",
+                    "type": "string"
+                },
+                "left": {
+                    "description": "Left coordinate (pixels) of the crop box.",
+                    "title": "Left",
+                    "type": "integer"
+                },
+                "top": {
+                    "description": "Top coordinate (pixels) of the crop box.",
+                    "title": "Top",
+                    "type": "integer"
+                },
+                "right": {
+                    "description": "Right coordinate (pixels, exclusive) of the crop box.",
+                    "title": "Right",
+                    "type": "integer"
+                },
+                "bottom": {
+                    "description": "Bottom coordinate (pixels, exclusive) of the crop box.",
+                    "title": "Bottom",
+                    "type": "integer"
+                }
+            },
+            "required": [
+                "input_image_path",
+                "output_image_path",
+                "left",
+                "top",
+                "right",
+                "bottom"
+            ],
+            "title": "InputModel",
+            "type": "object"
+        },
+        "output_schema": {
+            "properties": {
+                "output_image_path": {
+                    "description": "Path to the saved output image(s).",
+                    "title": "Output image path",
+                    "type": "string"
+                }
+            },
+            "required": [
+                "output_image_path"
+            ],
+            "title": "OutputModel",
+            "type": "object"
+        },
+        "secrets_schema": null,
+        "source_url": "https://github.com/IISAS/spice_image_classification_pieces/tree/main/pieces/ImageCircularCropPiece"
+    },
     "ImageEnhanceBrightnessPiece": {
         "name": "ImageEnhanceBrightnessPiece",
         "dependency": {
