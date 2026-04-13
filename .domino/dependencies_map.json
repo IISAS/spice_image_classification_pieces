@@ -6,14 +6,14 @@
         },
         "pieces": [
             "ImageCropPiece",
+            "ImageRotatePiece",
             "ImageOffsetPiece",
             "ImageToGrayPiece",
-            "ImageEnhanceContrastPiece",
-            "ImageRotatePiece",
-            "ImageEnhanceBrightnessPiece"
+            "ImageEnhanceBrightnessPiece",
+            "ImageEnhanceContrastPiece"
         ],
         "secrets": [],
-        "source_image": "ghcr.io/iisas/spice_image_classification_pieces:1.1.6-group0"
+        "source_image": "ghcr.io/iisas/spice_image_classification_pieces:development-group0"
     },
     "group1": {
         "dependency": {
@@ -25,6 +25,6 @@
             "ImageClassificationInferencePiece"
         ],
         "secrets": [],
-        "source_image": "ghcr.io/iisas/spice_image_classification_pieces:1.1.6-group1"
+        "source_image": "ghcr.io/iisas/spice_image_classification_pieces:development-group1"
     }
 }
