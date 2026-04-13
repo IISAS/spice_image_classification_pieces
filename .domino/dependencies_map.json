@@ -5,10 +5,10 @@
             "requirements_file": null
         },
         "pieces": [
-            "ImageCropPiece",
-            "ImageRotatePiece",
-            "ImageOffsetPiece",
             "ImageToGrayPiece",
+            "ImageRotatePiece",
+            "ImageCropPiece",
+            "ImageOffsetPiece",
             "ImageEnhanceBrightnessPiece",
             "ImageEnhanceContrastPiece"
         ],
