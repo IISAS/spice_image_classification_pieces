@@ -1,0 +1,27 @@
+{
+  "name": "TestGpuSupprt",
+  "description": "Piece that starts TensorFlow in a GPU container and prints the GPU devices TensorFlow can see.",
+  "dependency": {
+    "dockerfile": "Dockerfile.tensorflow-gpu"
+  },
+  "container_resources": {
+    "requests": {
+      "cpu": 100,
+      "memory": 512
+    },
+    "limits": {
+      "cpu": 500,
+      "memory": 2048
+    },
+    "use_gpu": true
+  },
+  "tags": [
+    "Tensorflow",
+    "GPU",
+    "diagnostics"
+  ],
+  "style": {
+    "node_label": "Test TensorFlow GPU",
+    "icon_class_name": "fa-duotone fa-microchip"
+  }
+}
