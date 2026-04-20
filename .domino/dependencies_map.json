@@ -22,7 +22,8 @@
         },
         "pieces": [
             "ImageClassificationTrainPiece",
-            "ImageClassificationInferencePiece"
+            "ImageClassificationInferencePiece",
+            "TestGpuSupprt"
         ],
         "secrets": [],
         "source_image": "ghcr.io/iisas/spice_image_classification_pieces:development-group1"

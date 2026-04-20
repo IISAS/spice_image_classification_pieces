@@ -754,4 +754,52 @@
         "secrets_schema": null,
         "source_url": "https://github.com/IISAS/spice_image_classification_pieces/tree/main/pieces/ImageEnhanceContrastPiece"
     }
+    "TestGpuSupprt": {
+    "name": "TestGpuSupprt",
+    "dependency": {
+      "dockerfile": "Dockerfile.tensorflow-gpu",
+      "requirements_file": null
+    },
+    "tags": [
+      "Tensorflow",
+      "GPU",
+      "diagnostics"
+    ],
+    "style": {
+      "node_label": "Test TensorFlow GPU",
+      "node_type": "default",
+      "node_style": {
+        "backgroundColor": "#ebebeb"
+      },
+      "useIcon": true,
+      "icon_class_name": "fa-duotone fa-microchip",
+      "iconStyle": {
+        "cursor": "pointer"
+      }
+    },
+    "description": "Piece that starts TensorFlow in a GPU container and prints the GPU devices TensorFlow can see.",
+    "container_resources": {
+      "requests": {
+        "cpu": 100,
+        "memory": 512
+      },
+      "limits": {
+        "cpu": 500,
+        "memory": 2048
+      },
+      "use_gpu": true
+    },
+    "input_schema": {
+      "properties": {},
+      "title": "InputModel",
+      "type": "object"
+    },
+    "output_schema": {
+      "properties": {},
+      "title": "OutputModel",
+      "type": "object"
+    },
+    "secrets_schema": null,
+    "source_url": "https://github.com/IISAS/spice_image_classification_pieces/tree/main/pieces/TestGpuSupprt"
+  }
 }
