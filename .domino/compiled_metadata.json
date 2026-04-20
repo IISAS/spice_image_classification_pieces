@@ -1,4 +1,153 @@
 {
+    "TestGpuSupprtPiece": {
+        "name": "TestGpuSupprtPiece",
+        "dependency": {
+            "dockerfile": "Dockerfile.tensorflow-gpu",
+            "requirements_file": null
+        },
+        "tags": [
+            "Tensorflow",
+            "GPU",
+            "diagnostics"
+        ],
+        "style": {
+            "node_label": "Test TensorFlow GPU",
+            "node_type": "default",
+            "node_style": {
+                "backgroundColor": "#ebebeb"
+            },
+            "useIcon": true,
+            "icon_class_name": "fa-duotone fa-microchip",
+            "iconStyle": {
+                "cursor": "pointer"
+            }
+        },
+        "description": "Piece that starts TensorFlow in a GPU container and prints the GPU devices TensorFlow can see.",
+        "container_resources": {
+            "requests": {
+                "cpu": 100,
+                "memory": 512
+            },
+            "limits": {
+                "cpu": 500,
+                "memory": 2048
+            },
+            "use_gpu": true
+        },
+        "input_schema": {
+            "description": "TestGpuSupprt Input Model",
+            "properties": {},
+            "title": "InputModel",
+            "type": "object"
+        },
+        "output_schema": {
+            "description": "TestGpuSupprt Output Model",
+            "properties": {
+                "tensorflow_version": {
+                    "description": "Loaded TensorFlow version.",
+                    "title": "Tensorflow Version",
+                    "type": "string"
+                },
+                "built_with_cuda": {
+                    "description": "Whether TensorFlow was built with CUDA support.",
+                    "title": "Built With Cuda",
+                    "type": "boolean"
+                },
+                "cuda_version": {
+                    "anyOf": [
+                        {
+                            "type": "string"
+                        },
+                        {
+                            "type": "null"
+                        }
+                    ],
+                    "description": "CUDA version reported by TensorFlow build info.",
+                    "title": "Cuda Version"
+                },
+                "cudnn_version": {
+                    "anyOf": [
+                        {
+                            "type": "string"
+                        },
+                        {
+                            "type": "null"
+                        }
+                    ],
+                    "description": "cuDNN version reported by TensorFlow build info.",
+                    "title": "Cudnn Version"
+                },
+                "physical_gpus": {
+                    "description": "Physical GPU devices visible to TensorFlow.",
+                    "items": {
+                        "additionalProperties": true,
+                        "type": "object"
+                    },
+                    "title": "Physical Gpus",
+                    "type": "array"
+                },
+                "logical_gpus": {
+                    "description": "Logical GPU devices initialized by TensorFlow.",
+                    "items": {
+                        "additionalProperties": true,
+                        "type": "object"
+                    },
+                    "title": "Logical Gpus",
+                    "type": "array"
+                },
+                "gpu_available": {
+                    "description": "True when TensorFlow can initialize at least one logical GPU.",
+                    "title": "Gpu Available",
+                    "type": "boolean"
+                },
+                "gpu_operation_result": {
+                    "anyOf": [
+                        {
+                            "items": {
+                                "items": {
+                                    "type": "number"
+                                },
+                                "type": "array"
+                            },
+                            "type": "array"
+                        },
+                        {
+                            "type": "null"
+                        }
+                    ],
+                    "description": "Result of a small TensorFlow operation executed on GPU when available.",
+                    "title": "Gpu Operation Result"
+                },
+                "gpu_operation_error": {
+                    "anyOf": [
+                        {
+                            "type": "string"
+                        },
+                        {
+                            "type": "null"
+                        }
+                    ],
+                    "description": "Error from the small TensorFlow GPU operation when it could not run.",
+                    "title": "Gpu Operation Error"
+                }
+            },
+            "required": [
+                "tensorflow_version",
+                "built_with_cuda",
+                "cuda_version",
+                "cudnn_version",
+                "physical_gpus",
+                "logical_gpus",
+                "gpu_available",
+                "gpu_operation_result",
+                "gpu_operation_error"
+            ],
+            "title": "OutputModel",
+            "type": "object"
+        },
+        "secrets_schema": null,
+        "source_url": "https://github.com/IISAS/spice_image_classification_pieces/microstep-dev/tree/main/pieces/TestGpuSupprtPiece"
+    },
     "ImageToGrayPiece": {
         "name": "ImageToGrayPiece",
         "dependency": {
