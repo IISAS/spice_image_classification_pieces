@@ -4,6 +4,8 @@ on:
   push:
     branches:
       - microstep-dev
+    paths:
+      - 'config.toml'
 
 jobs:
   run-tests-microstep-dev:
@@ -37,7 +39,8 @@ jobs:
 
       - name: Run organize and build images
         run: |
-          domino piece-repository organize --build-images --source-url=https://github.com/${{github.repository}} --tag-overwrite=development
+          LATEST_TAG=$(git describe --tags --abbrev=0)
+          domino piece-repository organize --build-images --source-url=https://github.com/${{github.repository}}/${{github.ref_name}} 
 
       - name: Install Tests Dependencies
         run: pip install -r requirements-tests.txt
@@ -46,7 +49,6 @@ jobs:
       - name: Run tests over built images
         env:
           DOMINO_TESTS_ENVIRONMENT: github
-          PIECE_SECRET_1: ${{ secrets.PIECE_SECRET_1 }}
         run: |
           pytest --cov=pieces --cov-report=xml --cov-report=term-missing
 
@@ -62,18 +64,11 @@ jobs:
         run: domino piece-repository publish-images --registry-token ${{ secrets.GITHUB_TOKEN }}
 
       - name: Commit files
-        id: commit_files
         run: |
           git config --local user.email "github-actions[bot]@users.noreply.github.com"
           git config --local user.name "github-actions[bot]"
           GIT_STATUS=$(git status -s)
-          if [[ ! -z "$GIT_STATUS" ]]; then
-            git add .domino/* && git commit -m "auto-organize" -a
-            echo "commit_sha=$(git rev-parse HEAD)" >> $GITHUB_ENV
-          else
-            echo "No changes to commit"
-            echo "commit_sha=${{ github.sha }}" >> $GITHUB_ENV
-          fi
+          [[ ! -z "$GIT_STATUS" ]] && git add .domino/* && git commit -m "auto-organize" -a || echo "No changes to commit"
 
       - name: Push changes
         uses: ad-m/github-push-action@master
@@ -85,5 +80,4 @@ jobs:
         env:
           GITHUB_REPOSITORY: ${{ github.repository }}
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: |
-          domino piece-repository release --tag-name=msd-${{ github.run_number }} --commit-sha=$commit_sha
+        run: domino piece-repository release
