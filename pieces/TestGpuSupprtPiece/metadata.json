@@ -1,5 +1,5 @@
 {
-  "name": "TestGpuSupprt",
+  "name": "TestGpuSupprtPiece",
   "description": "Piece that starts TensorFlow in a GPU container and prints the GPU devices TensorFlow can see.",
   "dependency": {
     "dockerfile": "Dockerfile.tensorflow-gpu"
