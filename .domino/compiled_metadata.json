@@ -17,7 +17,7 @@
                 "backgroundColor": "#ebebeb"
             },
             "useIcon": true,
-            "icon_class_name": "fa-duotone fa-microchip",
+            "icon_class_name": "fa-duotone fa-solid fa-right-to-bracket",
             "iconStyle": {
                 "cursor": "pointer"
             }
@@ -839,7 +839,7 @@
             "images"
         ],
         "style": {
-            "node_label": "Image Classification - 2D CNN (Inference)",
+            "node_label": "Test Image Classification - 2D CNN (Inference)",
             "node_type": "default",
             "node_style": {
                 "backgroundColor": "#ebebeb"
