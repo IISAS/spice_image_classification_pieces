@@ -9,7 +9,7 @@ def run_piece(
     inference_data_path: str,
 ):
     return piece_dry_run(
-        piece_name="ImageClassificationInferencePiece",
+        piece_name="ImageClassificationInferenceTestPiece",
         input_data={
             'saved_model_path': saved_model_path,
             'inference_data_path': inference_data_path,
@@ -18,7 +18,7 @@ def run_piece(
 
 
 @skip_envs('github')
-def test_ImageClassificationInferencePiece():
+def test_ImageClassificationInferenceTestPiece():
     piece_kwargs = {
         'saved_model_path': 'dry_run_results/trained_model',
         'inference_data_path': str(Path("test_data/damaged"))

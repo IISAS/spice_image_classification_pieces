@@ -26,10 +26,10 @@ logging.basicConfig(
 logger = logging.getLogger(__name__)
 
 
-class ImageClassificationInferencePiece(BasePiece):
+class ImageClassificationInferenceTestPiece(BasePiece):
     def piece_function(self, input_data: InputModel):
         try:
-            logger.info("Starting Image Classification Inference Piece")
+            logger.info("Starting Image Classification Inference Test Piece")
             model_path = os.path.join(input_data.saved_model_path, 'best_model.keras')
             logger.info(f"Loading model from {model_path}")
             model = tf.keras.models.load_model(model_path)

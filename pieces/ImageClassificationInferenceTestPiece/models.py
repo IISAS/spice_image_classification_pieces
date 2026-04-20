@@ -3,7 +3,7 @@ from pydantic import BaseModel, Field
 
 class InputModel(BaseModel):
     """
-    ImageClassificationInferencePiece Input Model
+    ImageClassificationInferenceTestPiece Input Model
     """
 
     saved_model_path: str = Field(
@@ -20,7 +20,7 @@ class InputModel(BaseModel):
 
 class OutputModel(BaseModel):
     """
-    ImageClassificationinferencePiece Output Model
+    ImageClassificationInferenceTestPiece Output Model
     """
     classification_results: list[dict] = Field(
         description="JSON of the classification results."
