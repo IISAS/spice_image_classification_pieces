@@ -25,7 +25,7 @@
         "images"
     ],
     "style": {
-        "node_label": "Image Classification - 2D CNN (Inference)",
+        "node_label": "Test Image Classification - 2D CNN (Inference)",
         "icon_class_name": "fa-duotone fa-solid fa-right-to-bracket"
     }
 }
