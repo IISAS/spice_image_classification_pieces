@@ -86,4 +86,4 @@ jobs:
           GITHUB_REPOSITORY: ${{ github.repository }}
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
-          domino piece-repository release --tag-name=microstep-development-${{ github.run_number }} --commit-sha=$commit_sha
+          domino piece-repository release --tag-name=msd-${{ github.run_number }} --commit-sha=$commit_sha
