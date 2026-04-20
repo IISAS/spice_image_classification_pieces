@@ -667,86 +667,6 @@
         "secrets_schema": null,
         "source_url": "https://github.com/IISAS/spice_image_classification_pieces/microstep-dev/tree/main/pieces/ImageClassificationTrainPiece"
     },
-    "ImageClassificationInferencePiece": {
-        "name": "ImageClassificationInferencePiece",
-        "dependency": {
-            "dockerfile": "Dockerfile.tensorflow-gpu",
-            "requirements_file": null
-        },
-        "tags": [
-            "AI",
-            "Keras",
-            "Tensorflow",
-            "CNN",
-            "2D",
-            "classification",
-            "images"
-        ],
-        "style": {
-            "node_label": "Image Classification - 2D CNN (Inference)",
-            "node_type": "default",
-            "node_style": {
-                "backgroundColor": "#ebebeb"
-            },
-            "useIcon": true,
-            "icon_class_name": "fa-duotone fa-solid fa-right-to-bracket",
-            "iconStyle": {
-                "cursor": "pointer"
-            }
-        },
-        "description": "Piece for inferencing an image classification model based on a 2D CNN architecture. The model is implemented in Keras.",
-        "container_resources": {
-            "requests": {
-                "cpu": 100,
-                "memory": 128
-            },
-            "limits": {
-                "cpu": 500,
-                "memory": 512
-            },
-            "use_gpu": true
-        },
-        "input_schema": {
-            "description": "ImageClassificationInferencePiece Input Model",
-            "properties": {
-                "saved_model_path": {
-                    "default": "",
-                    "description": "Path to the saved model directory.",
-                    "title": "saved model path",
-                    "type": "string"
-                },
-                "inference_data_path": {
-                    "default": "",
-                    "description": "Path to the inference data.",
-                    "title": "inference data path",
-                    "type": "string"
-                }
-            },
-            "title": "InputModel",
-            "type": "object"
-        },
-        "output_schema": {
-            "description": "ImageClassificationinferencePiece Output Model",
-            "properties": {
-                "classification_results": {
-                    "description": "JSON of the classification results.",
-                    "items": {
-                        "additionalProperties": true,
-                        "type": "object"
-                    },
-                    "title": "Classification Results",
-                    "type": "array"
-                }
-            },
-            "required": [
-                "classification_results"
-            ],
-            "title": "OutputModel",
-            "type": "object"
-        },
-        "secrets_schema": null,
-        "source_url": "https://github.com/IISAS/spice_image_classification_pieces/microstep-dev/tree/main/pieces/ImageClassificationInferencePiece"
-    },
     "ImageEnhanceBrightnessPiece": {
         "name": "ImageEnhanceBrightnessPiece",
         "dependency": {
@@ -902,5 +822,85 @@
         },
         "secrets_schema": null,
         "source_url": "https://github.com/IISAS/spice_image_classification_pieces/microstep-dev/tree/main/pieces/ImageEnhanceContrastPiece"
+    },
+    "ImageClassificationInferenceTestPiece": {
+        "name": "ImageClassificationInferenceTestPiece",
+        "dependency": {
+            "dockerfile": "Dockerfile.tensorflow-gpu",
+            "requirements_file": null
+        },
+        "tags": [
+            "AI",
+            "Keras",
+            "Tensorflow",
+            "CNN",
+            "2D",
+            "classification",
+            "images"
+        ],
+        "style": {
+            "node_label": "Image Classification - 2D CNN (Inference)",
+            "node_type": "default",
+            "node_style": {
+                "backgroundColor": "#ebebeb"
+            },
+            "useIcon": true,
+            "icon_class_name": "fa-duotone fa-solid fa-right-to-bracket",
+            "iconStyle": {
+                "cursor": "pointer"
+            }
+        },
+        "description": "Piece for inferencing an image classification model based on a 2D CNN architecture. The model is implemented in Keras.",
+        "container_resources": {
+            "requests": {
+                "cpu": 100,
+                "memory": 128
+            },
+            "limits": {
+                "cpu": 500,
+                "memory": 512
+            },
+            "use_gpu": true
+        },
+        "input_schema": {
+            "description": "ImageClassificationInferenceTestPiece Input Model",
+            "properties": {
+                "saved_model_path": {
+                    "default": "",
+                    "description": "Path to the saved model directory.",
+                    "title": "saved model path",
+                    "type": "string"
+                },
+                "inference_data_path": {
+                    "default": "",
+                    "description": "Path to the inference data.",
+                    "title": "inference data path",
+                    "type": "string"
+                }
+            },
+            "title": "InputModel",
+            "type": "object"
+        },
+        "output_schema": {
+            "description": "ImageClassificationInferenceTestPiece Output Model",
+            "properties": {
+                "classification_results": {
+                    "description": "JSON of the classification results.",
+                    "items": {
+                        "additionalProperties": true,
+                        "type": "object"
+                    },
+                    "title": "Classification Results",
+                    "type": "array"
+                }
+            },
+            "required": [
+                "classification_results"
+            ],
+            "title": "OutputModel",
+            "type": "object"
+        },
+        "secrets_schema": null,
+        "source_url": "https://github.com/IISAS/spice_image_classification_pieces/microstep-dev/tree/main/pieces/ImageClassificationInferenceTestPiece"
     }
 }
