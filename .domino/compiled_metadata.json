@@ -1,4 +1,161 @@
 {
+    "ImageToGrayPiece": {
+        "name": "ImageToGrayPiece",
+        "dependency": {
+            "dockerfile": "Dockerfile",
+            "requirements_file": null
+        },
+        "tags": [
+            "image",
+            "preprocessing",
+            "grayscale"
+        ],
+        "style": {
+            "node_label": "Convert to Grayscale",
+            "node_type": "default",
+            "node_style": {
+                "backgroundColor": "#ebebeb"
+            },
+            "useIcon": true,
+            "icon_class_name": "fa-duotone fa-droplet",
+            "iconStyle": {
+                "cursor": "pointer"
+            }
+        },
+        "description": "Piece to convert an image to grayscale and save the result.",
+        "container_resources": {
+            "requests": {
+                "cpu": 100,
+                "memory": 128
+            },
+            "limits": {
+                "cpu": 500,
+                "memory": 512
+            }
+        },
+        "input_schema": {
+            "properties": {
+                "input_image_path": {
+                    "description": "Path to the source image file or folder of images on disk.",
+                    "title": "Input image path",
+                    "type": "string"
+                },
+                "output_image_path": {
+                    "description": "Where to save the enhanced image(s) (parent folders are created if missing).",
+                    "title": "Output image path",
+                    "type": "string"
+                }
+            },
+            "required": [
+                "input_image_path",
+                "output_image_path"
+            ],
+            "title": "InputModel",
+            "type": "object"
+        },
+        "output_schema": {
+            "properties": {
+                "output_image_path": {
+                    "description": "Path to the saved output image.",
+                    "title": "Output image path",
+                    "type": "string"
+                }
+            },
+            "required": [
+                "output_image_path"
+            ],
+            "title": "OutputModel",
+            "type": "object"
+        },
+        "secrets_schema": null,
+        "source_url": "https://github.com/IISAS/spice_image_classification_pieces/tree/main/pieces/ImageToGrayPiece"
+    },
+    "ImageRotatePiece": {
+        "name": "ImageRotatePiece",
+        "dependency": {
+            "dockerfile": "Dockerfile",
+            "requirements_file": null
+        },
+        "tags": [
+            "image",
+            "preprocessing",
+            "rotate"
+        ],
+        "style": {
+            "node_label": "Rotate (0/90/180/270)",
+            "node_type": "default",
+            "node_style": {
+                "backgroundColor": "#ebebeb"
+            },
+            "useIcon": true,
+            "icon_class_name": "fa-duotone fa-rotate",
+            "iconStyle": {
+                "cursor": "pointer"
+            }
+        },
+        "description": "Piece to rotate an image by a discrete angle (0, 90, 180, 270) and save the result.",
+        "container_resources": {
+            "requests": {
+                "cpu": 100,
+                "memory": 128
+            },
+            "limits": {
+                "cpu": 500,
+                "memory": 512
+            }
+        },
+        "input_schema": {
+            "properties": {
+                "input_image_path": {
+                    "description": "Path to the source image file or folder of images on disk.",
+                    "title": "Input image path",
+                    "type": "string"
+                },
+                "output_image_path": {
+                    "description": "Folder where to save the enhanced image(s).",
+                    "title": "Output folder path",
+                    "type": "string"
+                },
+                "rotation": {
+                    "default": 0,
+                    "description": "Rotation angle in degrees; must be one of 0, 90, 180, 270 (counter-clockwise).",
+                    "items": {
+                        "enum": [
+                            0,
+                            90,
+                            180,
+                            270
+                        ],
+                        "type": "integer"
+                    },
+                    "title": "Rotation (degrees)",
+                    "type": "array"
+                }
+            },
+            "required": [
+                "input_image_path",
+                "output_image_path"
+            ],
+            "title": "InputModel",
+            "type": "object"
+        },
+        "output_schema": {
+            "properties": {
+                "output_image_path": {
+                    "description": "Path to the folder with saved output image(s).",
+                    "title": "Output folder path",
+                    "type": "string"
+                }
+            },
+            "required": [
+                "output_image_path"
+            ],
+            "title": "OutputModel",
+            "type": "object"
+        },
+        "secrets_schema": null,
+        "source_url": "https://github.com/IISAS/spice_image_classification_pieces/tree/main/pieces/ImageRotatePiece"
+    },
     "ImageCropPiece": {
         "name": "ImageCropPiece",
         "dependency": {
@@ -441,30 +598,31 @@
         "secrets_schema": null,
         "source_url": "https://github.com/IISAS/spice_image_classification_pieces/tree/main/pieces/ImageClassificationInferencePiece"
     },
-    "ImageToGrayPiece": {
-        "name": "ImageToGrayPiece",
+    "ImageEnhanceBrightnessPiece": {
+        "name": "ImageEnhanceBrightnessPiece",
         "dependency": {
             "dockerfile": "Dockerfile",
             "requirements_file": null
         },
         "tags": [
+            "AI",
             "image",
             "preprocessing",
-            "grayscale"
+            "brightness"
         ],
         "style": {
-            "node_label": "Convert to Grayscale",
+            "node_label": "Image Enhance Brightness",
             "node_type": "default",
             "node_style": {
                 "backgroundColor": "#ebebeb"
             },
             "useIcon": true,
-            "icon_class_name": "fa-duotone fa-droplet",
+            "icon_class_name": "fa-duotone fa-solid fa-sun",
             "iconStyle": {
                 "cursor": "pointer"
             }
         },
-        "description": "Piece to convert an image to grayscale and save the result.",
+        "description": "Piece to apply brightness enhancement to a single image and save the result.",
         "container_resources": {
             "requests": {
                 "cpu": 100,
@@ -486,6 +644,12 @@
                     "description": "Where to save the enhanced image(s) (parent folders are created if missing).",
                     "title": "Output image path",
                     "type": "string"
+                },
+                "factor": {
+                    "default": 1.0,
+                    "description": ">1.0 increases brightness, <1.0 decreases; 1.0 leaves the image unchanged.",
+                    "title": "Brightness factor",
+                    "type": "number"
                 }
             },
             "required": [
@@ -510,7 +674,7 @@
             "type": "object"
         },
         "secrets_schema": null,
-        "source_url": "https://github.com/IISAS/spice_image_classification_pieces/tree/main/pieces/ImageToGrayPiece"
+        "source_url": "https://github.com/IISAS/spice_image_classification_pieces/tree/main/pieces/ImageEnhanceBrightnessPiece"
     },
     "ImageEnhanceContrastPiece": {
         "name": "ImageEnhanceContrastPiece",
@@ -590,117 +754,34 @@
         "secrets_schema": null,
         "source_url": "https://github.com/IISAS/spice_image_classification_pieces/tree/main/pieces/ImageEnhanceContrastPiece"
     },
-    "ImageRotatePiece": {
-        "name": "ImageRotatePiece",
+    "ImageClassificationInferenceTestPiece": {
+        "name": "ImageClassificationInferenceTestPiece",
         "dependency": {
-            "dockerfile": "Dockerfile",
-            "requirements_file": null
-        },
-        "tags": [
-            "image",
-            "preprocessing",
-            "rotate"
-        ],
-        "style": {
-            "node_label": "Rotate (0/90/180/270)",
-            "node_type": "default",
-            "node_style": {
-                "backgroundColor": "#ebebeb"
-            },
-            "useIcon": true,
-            "icon_class_name": "fa-duotone fa-rotate",
-            "iconStyle": {
-                "cursor": "pointer"
-            }
-        },
-        "description": "Piece to rotate an image by a discrete angle (0, 90, 180, 270) and save the result.",
-        "container_resources": {
-            "requests": {
-                "cpu": 100,
-                "memory": 128
-            },
-            "limits": {
-                "cpu": 500,
-                "memory": 512
-            }
-        },
-        "input_schema": {
-            "properties": {
-                "input_image_path": {
-                    "description": "Path to the source image file or folder of images on disk.",
-                    "title": "Input image path",
-                    "type": "string"
-                },
-                "output_image_path": {
-                    "description": "Folder where to save the enhanced image(s).",
-                    "title": "Output folder path",
-                    "type": "string"
-                },
-                "rotation": {
-                    "default": 0,
-                    "description": "Rotation angle in degrees; must be one of 0, 90, 180, 270 (counter-clockwise).",
-                    "items": {
-                        "enum": [
-                            0,
-                            90,
-                            180,
-                            270
-                        ],
-                        "type": "integer"
-                    },
-                    "title": "Rotation (degrees)",
-                    "type": "array"
-                }
-            },
-            "required": [
-                "input_image_path",
-                "output_image_path"
-            ],
-            "title": "InputModel",
-            "type": "object"
-        },
-        "output_schema": {
-            "properties": {
-                "output_image_path": {
-                    "description": "Path to the folder with saved output image(s).",
-                    "title": "Output folder path",
-                    "type": "string"
-                }
-            },
-            "required": [
-                "output_image_path"
-            ],
-            "title": "OutputModel",
-            "type": "object"
-        },
-        "secrets_schema": null,
-        "source_url": "https://github.com/IISAS/spice_image_classification_pieces/tree/main/pieces/ImageRotatePiece"
-    },
-    "ImageEnhanceBrightnessPiece": {
-        "name": "ImageEnhanceBrightnessPiece",
-        "dependency": {
-            "dockerfile": "Dockerfile",
+            "dockerfile": "Dockerfile.tensorflow-gpu",
             "requirements_file": null
         },
         "tags": [
             "AI",
-            "image",
-            "preprocessing",
-            "brightness"
+            "Keras",
+            "Tensorflow",
+            "CNN",
+            "2D",
+            "classification",
+            "images"
         ],
         "style": {
-            "node_label": "Image Enhance Brightness",
+            "node_label": "Image Classification - 2D CNN (Inference)",
             "node_type": "default",
             "node_style": {
                 "backgroundColor": "#ebebeb"
             },
             "useIcon": true,
-            "icon_class_name": "fa-duotone fa-solid fa-sun",
+            "icon_class_name": "fa-duotone fa-solid fa-right-to-bracket",
             "iconStyle": {
                 "cursor": "pointer"
             }
         },
-        "description": "Piece to apply brightness enhancement to a single image and save the result.",
+        "description": "Piece for inferencing an image classification model based on a 2D CNN architecture. The model is implemented in Keras.",
         "container_resources": {
             "requests": {
                 "cpu": 100,
@@ -709,49 +790,48 @@
             "limits": {
                 "cpu": 500,
                 "memory": 512
-            }
+            },
+            "use_gpu": true
         },
         "input_schema": {
+            "description": "ImageClassificationInferenceTestPiece Input Model",
             "properties": {
-                "input_image_path": {
-                    "description": "Path to the source image file or folder of images on disk.",
-                    "title": "Input image path",
+                "saved_model_path": {
+                    "default": "",
+                    "description": "Path to the saved model directory.",
+                    "title": "saved model path",
                     "type": "string"
                 },
-                "output_image_path": {
-                    "description": "Where to save the enhanced image(s) (parent folders are created if missing).",
-                    "title": "Output image path",
+                "inference_data_path": {
+                    "default": "",
+                    "description": "Path to the inference data.",
+                    "title": "inference data path",
                     "type": "string"
-                },
-                "factor": {
-                    "default": 1.0,
-                    "description": ">1.0 increases brightness, <1.0 decreases; 1.0 leaves the image unchanged.",
-                    "title": "Brightness factor",
-                    "type": "number"
                 }
             },
-            "required": [
-                "input_image_path",
-                "output_image_path"
-            ],
             "title": "InputModel",
             "type": "object"
         },
         "output_schema": {
+            "description": "ImageClassificationinferenceTestPiece Output Model",
             "properties": {
-                "output_image_path": {
-                    "description": "Path to the saved output image.",
-                    "title": "Output image path",
-                    "type": "string"
+                "classification_results": {
+                    "description": "JSON of the classification results.",
+                    "items": {
+                        "additionalProperties": true,
+                        "type": "object"
+                    },
+                    "title": "Classification Results",
+                    "type": "array"
                 }
             },
             "required": [
-                "output_image_path"
+                "classification_results"
             ],
             "title": "OutputModel",
             "type": "object"
         },
         "secrets_schema": null,
-        "source_url": "https://github.com/IISAS/spice_image_classification_pieces/tree/main/pieces/ImageEnhanceBrightnessPiece"
+        "source_url": "https://github.com/IISAS/spice_image_classification_pieces/tree/main/pieces/ImageClassificationInferenceTestPiece"
     }
 }

@@ -5,15 +5,15 @@
             "requirements_file": null
         },
         "pieces": [
+            "ImageToGrayPiece",
+            "ImageRotatePiece",
             "ImageCropPiece",
             "ImageOffsetPiece",
-            "ImageToGrayPiece",
-            "ImageEnhanceContrastPiece",
-            "ImageRotatePiece",
-            "ImageEnhanceBrightnessPiece"
+            "ImageEnhanceBrightnessPiece",
+            "ImageEnhanceContrastPiece"
         ],
         "secrets": [],
-        "source_image": "ghcr.io/iisas/spice_image_classification_pieces:1.1.6-group0"
+        "source_image": "ghcr.io/iisas/spice_image_classification_pieces:1.1.7-group0"
     },
     "group1": {
         "dependency": {
@@ -22,9 +22,10 @@
         },
         "pieces": [
             "ImageClassificationTrainPiece",
-            "ImageClassificationInferencePiece"
+            "ImageClassificationInferencePiece",
+            "ImageClassificationInferenceTestPiece"
         ],
         "secrets": [],
-        "source_image": "ghcr.io/iisas/spice_image_classification_pieces:1.1.6-group1"
+        "source_image": "ghcr.io/iisas/spice_image_classification_pieces:1.1.7-group1"
     }
 }
