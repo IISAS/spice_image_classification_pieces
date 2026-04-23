@@ -1,31 +1,31 @@
 {
     "group0": {
         "dependency": {
+            "dockerfile": "Dockerfile",
+            "requirements_file": null
+        },
+        "pieces": [
+            "ImageEnhanceBrightnessPiece",
+            "ImageToGrayPiece",
+            "ImageEnhanceContrastPiece",
+            "ImageOffsetPiece",
+            "ImageCropPiece",
+            "ImageRotatePiece"
+        ],
+        "secrets": [],
+        "source_image": "ghcr.io/iisas/spice_image_classification_pieces:m-dev-0-group0"
+    },
+    "group1": {
+        "dependency": {
             "dockerfile": "Dockerfile.tensorflow-gpu",
             "requirements_file": null
         },
         "pieces": [
             "TestGpuSupprtPiece",
-            "ImageClassificationTrainPiece",
-            "ImageClassificationInferenceTestPiece"
+            "ImageClassificationInferenceTestPiece",
+            "ImageClassificationTrainPiece"
         ],
         "secrets": [],
-        "source_image": "ghcr.io/iisas/spice_image_classification_pieces:m-dev-0.6-group0"
-    },
-    "group1": {
-        "dependency": {
-            "dockerfile": "Dockerfile",
-            "requirements_file": null
-        },
-        "pieces": [
-            "ImageToGrayPiece",
-            "ImageRotatePiece",
-            "ImageCropPiece",
-            "ImageOffsetPiece",
-            "ImageEnhanceBrightnessPiece",
-            "ImageEnhanceContrastPiece"
-        ],
-        "secrets": [],
-        "source_image": "ghcr.io/iisas/spice_image_classification_pieces:m-dev-0.6-group1"
+        "source_image": "ghcr.io/iisas/spice_image_classification_pieces:m-dev-0-group1"
     }
 }
