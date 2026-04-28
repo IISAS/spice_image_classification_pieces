@@ -10,4 +10,13 @@ COPY dependencies/requirements-gpu.txt domino/pieces_repository/dependencies/
 
 RUN pip install --no-cache-dir -r domino/pieces_repository/dependencies/requirements-gpu.txt
 
+# TensorFlow GPU runtime fixes
+RUN TF_DIR=$(python -c "import tensorflow as tf; import os; print(os.path.dirname(tf.__file__))") && \
+    ln -svf ${TF_DIR}/../nvidia/*/lib/*.so* ${TF_DIR}/ || true
+
+RUN PTXAS_PATH=$(python -c "import os, nvidia.cuda_nvcc; print(os.path.join(os.path.dirname(os.path.dirname(nvidia.cuda_nvcc.__file__)), 'bin', 'ptxas'))") && \
+    ln -sf ${PTXAS_PATH} /usr/local/bin/ptxas || true
+
+ENV LD_LIBRARY_PATH="/usr/local/lib/python3.11/site-packages/tensorflow:/usr/local/lib/python3.11/site-packages/nvidia/cublas/lib:/usr/local/lib/python3.11/site-packages/nvidia/cuda_runtime/lib:/usr/local/lib/python3.11/site-packages/nvidia/cudnn/lib:/usr/local/lib/python3.11/site-packages/nvidia/cufft/lib:/usr/local/lib/python3.11/site-packages/nvidia/cusolver/lib:/usr/local/lib/python3.11/site-packages/nvidia/cusparse/lib:/usr/local/lib/python3.11/site-packages/nvidia/curand/lib:/usr/local/lib/python3.11/site-packages/nvidia/nccl/lib:/usr/local/lib/python3.11/site-packages/nvidia/nvjitlink/lib:/usr/local/lib/python3.11/site-packages/nvidia/cuda_nvrtc/lib:/usr/local/lib/python3.11/site-packages/nvidia/cuda_cupti/lib:${LD_LIBRARY_PATH}"
+
 ENV PYTHONPATH="/home/domino/pieces_repository:${PYTHONPATH}"
