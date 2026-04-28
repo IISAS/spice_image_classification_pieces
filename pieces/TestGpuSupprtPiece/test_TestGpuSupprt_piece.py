@@ -2,7 +2,7 @@ import contextlib
 import sys
 import types
 
-from pieces.TestGpuSupprt.app import inspect_tensorflow_gpu
+from pieces.TestGpuSupprtPiece.piece import inspect_tensorflow_gpu
 
 
 class _FakeDevice:

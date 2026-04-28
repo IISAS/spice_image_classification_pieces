@@ -1,5 +1,5 @@
 {
-  "name": "TestGpuSupprt",
+  "name": "TestGpuSupprtPiece",
   "description": "Piece that starts TensorFlow in a GPU container and prints the GPU devices TensorFlow can see.",
   "dependency": {
     "dockerfile": "Dockerfile.tensorflow-gpu"
@@ -22,6 +22,6 @@
   ],
   "style": {
     "node_label": "Test TensorFlow GPU",
-    "icon_class_name": "fa-duotone fa-microchip"
+    "icon_class_name": "fa-duotone fa-solid fa-right-to-bracket"
   }
 }
